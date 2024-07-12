@@ -15,3 +15,11 @@ export function getAllLottery() {
     method: 'get'
   })
 }
+
+//获取所有平台游戏列表
+export function getAllPlat() {
+  return request({
+    url: '/plat/getAllPlat',
+    method: 'get'
+  })
+}
