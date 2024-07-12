@@ -25,8 +25,8 @@
 
 <script setup>
 import { ref } from 'vue'
-import { useHomeDomainStore } from '@/stores/home.js'
-const domainStore = useHomeDomainStore()
+import { useHomeStore } from '@/stores/home.js'
+const homeStore = useHomeStore()
 import logo from '@/assets/logo.svg'
 
 const payType = ref([
@@ -90,8 +90,6 @@ const payType = ref([
       cursor: pointer;
       background-color: #eee;
       margin: 0 15px;
-
-
 
       .logo-img {
         width: 100%;

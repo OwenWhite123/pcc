@@ -6,9 +6,9 @@
 
 <script setup>
 import { onMounted, ref, watch } from 'vue'
-import { useHomeDomainStore } from '@/stores/home.js'
+import { useHomeStore } from '@/stores/home.js'
 import { useRoute, useRouter } from 'vue-router'
-const homeDomain = useHomeDomainStore()
+const homeDomain = useHomeStore()
 
 const route = useRoute()
 const router = useRouter()
@@ -21,14 +21,13 @@ watch(
   () => router.currentRoute.value,
   (newValue) => {
     if (newValue.meta.navId) {
-      homeDomain.setNavStatus(newValue.meta.navId)
+      homeDomain.setAttribute('navStatus', newValue.meta.navId)
     } else {
-      // homeDomain.setNavStatus('')
+      // homeDomain.setAttribute('navStatus', '')
     }
   },
   { immediate: true }
 )
-// 获取网站配置
 </script>
 
 <style scoped lang="scss"></style>

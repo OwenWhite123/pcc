@@ -3,7 +3,7 @@
     <Transition name="fade">
       <div class="box">
         <el-form ref="formRef" class="form" :model="formValue" :rules="rules" label-position="top">
-          <el-image style="width: 184px; height: 45px" :src="domainStore.loginImg" fit="contain" />
+          <el-image style="width: 184px; height: 45px" :src="homeStore.loginImg" fit="contain" />
           <p
             style="
               font-size: 26px;
@@ -43,7 +43,7 @@
               @keyup.enter="submit"
             >
               <template #prefix>
-                <img class="icon" :src="domainStore.logoImg" />
+                <img class="icon" :src="homeStore.logoImg" />
               </template>
               <template #suffix>
                 <el-image style="width: 85px; height: 45px" :src="codeImg" fit="contain" />
@@ -52,7 +52,7 @@
           </el-form-item>
           <div style="display: flex; align-items: center; justify-content: space-between">
             <el-checkbox v-model="rememberPassword">记住密码</el-checkbox>
-            <el-link type="primary" :href="domainStore.viewPath">忘记密码？</el-link>
+            <el-link type="primary" :href="homeStore.viewPath">忘记密码？</el-link>
           </div>
           <el-row>
             <el-button
@@ -86,8 +86,8 @@ import {
   getLsUserRememberPw
 } from '@/core/storage/ls'
 import { login, getCaptcha } from '@/api/user'
-import { useHomeDomainStore } from '@/stores/home.js'
-const domainStore = useHomeDomainStore()
+import { useHomeStore } from '@/stores/home.js'
+const homeStore = useHomeStore()
 
 const confirmLoading = ref(false)
 const router = useRouter()

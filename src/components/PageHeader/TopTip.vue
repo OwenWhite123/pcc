@@ -13,7 +13,7 @@
     <ul class="nav">
       <li class="item">线路检测</li>
       <li class="item">会员VIP权益</li>
-      <li class="item">代理中心</li>
+      <li class="item" v-if="homeStore.hasLogin">代理中心</li>
       <UserWallet />
       <UserName />
     </ul>
@@ -25,15 +25,10 @@ import { ref } from 'vue'
 import UserName from './UserName.vue'
 import UserWallet from './UserWallet.vue'
 
-const isLoading = ref(false)
+import { useHomeStore } from '@/stores/home.js'
+const homeStore = useHomeStore()
 
-function refresh() {
-  isLoading.value = true
-  // 模拟数据刷新
-  setTimeout(() => {
-    isLoading.value = false
-  }, 3000)
-}
+const isLoading = ref(false)
 </script>
 
 <style lang="scss" scoped>
@@ -136,8 +131,5 @@ function refresh() {
       margin-left: 6px;
     }
   }
-
-
-
 }
 </style>

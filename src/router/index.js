@@ -53,7 +53,36 @@ const routes = [
               title: '彩票游戏',
               navId: '1',
               permission: 'home'
-            }
+            },
+            children: [
+              {
+                path: '/lottery/lhc',
+                name: 'lottery/lhc',
+                component: () => import('@/views/lottery/lhc/index.vue'),
+                meta: {
+                  title: '六合彩',
+                  permission: 'lhc'
+                }
+              }
+              // {
+              //   path: '/lottery/ffc',
+              //   name: 'lottery/ffc',
+              //   component: () => import('@/views/lottery/ffc.vue'),
+              //   meta: {
+              //     title: '11选5',
+              //     permission: 'ffc'
+              //   }
+              // },
+              // {
+              //   path: '/lottery/pk10',
+              //   name: 'lottery/pk10',
+              //   component: () => import('@/views/lottery/pk10.vue'),
+              //   meta: {
+              //     title: 'PK10',
+              //     permission: 'pk10'
+              //   }
+              // }
+            ]
           },
           {
             path: '/board',

@@ -1,11 +1,11 @@
 <template>
-  <div class="name-box" v-if="domainStore.hasLogin">
+  <div class="name-box" v-if="homeStore.hasLogin">
     <el-popover ref="menuPopoverRef" placement="bottom" :width="260" trigger="click" disabled>
       <template #reference>
-        <div style="display: flex;align-items: center;">
+        <div style="display: flex; align-items: center">
           <div class="label">主钱包：</div>
           <div class="load-box" v-if="isLoading"><span class="loader"></span></div>
-          <div class="primary val" v-else>￥52121</div>
+          <div class="primary val" v-else>￥{{ homeStore.balance.toFixed(2) }}</div>
           <div class="refresh-icon">
             <el-icon @click="refresh">
               <RefreshRight />
@@ -14,7 +14,6 @@
         </div>
       </template>
       <div class="mind-box">
-
         <div class="left-box">
           <div class="money">
             <span class="num">￥123</span>
@@ -27,12 +26,14 @@
           <div class="name">主钱包余额</div>
         </div>
         <div class="right-box">
-          <el-button class="btn">充值
+          <el-button class="btn"
+            >充值
             <el-icon>
               <MessageBox />
             </el-icon>
           </el-button>
-          <el-button class="btn">额度转换
+          <el-button class="btn"
+            >额度转换
             <el-icon>
               <MessageBox />
             </el-icon>
@@ -50,8 +51,9 @@
                   </el-icon>
                   <span>{{ item.meta.title }}</span>
                 </template>
-                <el-menu-item v-for="temp in item.children" :key="temp.path" :index="temp.path">{{ temp.meta.title
-                  }}</el-menu-item>
+                <el-menu-item v-for="temp in item.children" :key="temp.path" :index="temp.path">{{
+                  temp.meta.title
+                }}</el-menu-item>
               </el-sub-menu>
             </template>
             <template v-else>
@@ -69,19 +71,18 @@
   </div>
 
   <Login ref="loginRef" />
-
 </template>
 
 <script setup>
 import { ref, unref, onMounted, nextTick } from 'vue'
 import { useRouter } from 'vue-router'
 import userRoutes from '@/router/user'
-import { ElMessageBox, ElMessage, ElLoading } from "element-plus"
-import { getPlatList } from '@/api/user'
+import { ElMessageBox, ElMessage, ElLoading } from 'element-plus'
+import { getUserBalance } from '@/api/user'
 
 import Login from './Login.vue'
-import { useHomeDomainStore } from '@/stores/home.js'
-const domainStore = useHomeDomainStore()
+import { useHomeStore } from '@/stores/home.js'
+const homeStore = useHomeStore()
 
 const router = useRouter()
 const isLoading = ref(false)
@@ -91,27 +92,26 @@ const menuPopoverRef = ref()
 
 const platList = ref([])
 
-onMounted(() => {
-})
+onMounted(() => {})
 
 function select(path) {
   unref(menuPopoverRef).hide()
 }
 
-function refresh() {
+async function refresh() {
   isLoading.value = true
-  setTimeout(() => {
-    isLoading.value = false
-  }, 3000)
+  await getUserBalanceFn()
+  isLoading.value = false
 }
 
-async function getPlatListFn() {
-  const { result } = await getPlatList()
+async function getUserBalanceFn() {
+  const { result } = await getUserBalance()
   if (result) {
-    platList.value = result.list
+    const { balance } = result
+    ElMessage.success('已刷新')
+    homeStore.setAttribute('balance', balance)
   }
 }
-
 </script>
 
 <style scoped lang="scss">
@@ -142,7 +142,6 @@ async function getPlatListFn() {
       font-size: 14px;
       font-weight: 400;
       line-height: 20px;
-
     }
   }
 
@@ -152,7 +151,7 @@ async function getPlatListFn() {
     .btn {
       width: 95px;
       height: 32px;
-      order: 1px solid #F3F9FF;
+      order: 1px solid #f3f9ff;
       color: $primaryColor;
       font-size: 14px;
       margin: 0;
@@ -242,7 +241,6 @@ async function getPlatListFn() {
 }
 
 @keyframes bblFadInOut {
-
   0%,
   80%,
   100% {
@@ -264,7 +262,7 @@ async function getPlatListFn() {
     .el-sub-menu__title {
       height: 40px;
       line-height: 40px;
-      color: #5F5F5F;
+      color: #5f5f5f;
       font-size: 16px;
       padding: 0;
     }

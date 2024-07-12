@@ -13,7 +13,12 @@
         </el-input>
       </el-form-item>
       <el-form-item prop="loginPwd">
-        <el-input placeholder="请输入登录密码" v-model="formValue.loginPwd" type="password" @keyup.enter="submit">
+        <el-input
+          placeholder="请输入登录密码"
+          v-model="formValue.loginPwd"
+          type="password"
+          @keyup.enter="submit"
+        >
           <template #prefix>
             <el-icon size="20">
               <Lock />
@@ -22,7 +27,12 @@
         </el-input>
       </el-form-item>
       <el-form-item prop="captcha">
-        <el-input placeholder="验证码" v-model="formValue.captcha" type="text" @keyup.enter="submit">
+        <el-input
+          placeholder="验证码"
+          v-model="formValue.captcha"
+          type="text"
+          @keyup.enter="submit"
+        >
           <template #prefix>
             <el-icon size="20">
               <User />
@@ -30,23 +40,31 @@
           </template>
           <template #suffix>
             <div class="code-box">
-              <el-image :src="codeImg" style="height: 100%" fit="contain" @click="getCaptchaHandle" />
+              <el-image
+                :src="codeImg"
+                style="height: 100%"
+                fit="contain"
+                @click="getCaptchaHandle"
+              />
             </div>
           </template>
         </el-input>
       </el-form-item>
 
       <el-row>
-        <el-button class="btn" @click="submit" type="primary" :disabled="confirmLoading" :loading="confirmLoading">
+        <el-button
+          class="btn"
+          @click="submit"
+          type="primary"
+          :disabled="confirmLoading"
+          :loading="confirmLoading"
+        >
           登录
         </el-button>
       </el-row>
-      <div style="
-              display: flex;
-              align-items: center;
-              justify-content: space-between;
-              margin-top: 15px;
-            ">
+      <div
+        style="display: flex; align-items: center; justify-content: space-between; margin-top: 15px"
+      >
         <!-- <el-checkbox v-model="rememberPassword">记住密码</el-checkbox> -->
         <el-button class="btn-register" @click="goRegister" type="warning">
           <span style="margin-right: 5px">立即注册</span>
@@ -54,7 +72,7 @@
             <User />
           </el-icon>
         </el-button>
-        <el-link type="primary" :href="domainStore.viewPath">忘记密码？</el-link>
+        <el-link type="primary" :href="homeStore.viewPath">忘记密码？</el-link>
       </div>
     </el-form>
   </div>
@@ -75,10 +93,10 @@ import {
   getLsUserRememberPw
 } from '@/core/storage/ls'
 import { login, getCaptcha, userInfo } from '@/api/user'
-import { useHomeDomainStore } from '@/stores/home.js'
+import { useHomeStore } from '@/stores/home.js'
 
 const router = useRouter()
-const domainStore = useHomeDomainStore()
+const homeStore = useHomeStore()
 
 const emits = defineEmits(['success', 'goRegister', 'forgot'])
 
@@ -166,7 +184,7 @@ async function loginFn() {
     ElMessage.success('登录成功')
     setLsHasLogin('1')
     // router.push('/')
-    domainStore.setAttribute('hasLogin', true)
+    homeStore.setAttribute('hasLogin', true)
     userInfoFn()
     emits('success')
     setTimeout(() => {
@@ -180,7 +198,8 @@ async function loginFn() {
 async function userInfoFn(user) {
   const { result } = await userInfo(user)
   if (result) {
-    domainStore.setAttribute('userInfo', result.user)
+    homeStore.setAttribute('userInfo', result.user)
+    homeStore.setAttribute('balance', result.user.balance)
   }
 }
 
@@ -197,7 +216,6 @@ function init() {
     captchaKey: ''
   }
 }
-
 </script>
 
 <style scoped lang="scss">

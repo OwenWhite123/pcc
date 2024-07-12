@@ -1,24 +1,34 @@
 <template>
   <div class="page">
-    <el-image class="logo" style="width: 184px; height: 45px" :src="domainStore.loginImg" fit="contain"
-      @click="goPage({ url: '/home', id: '0' })" />
+    <el-image
+      class="logo"
+      style="width: 184px; height: 45px"
+      :src="homeStore.loginImg"
+      fit="contain"
+      @click="goPage({ url: '/home', id: '0' })"
+    />
     <ul class="menus">
-      <li class="menu" :class="{ 'menu-active': item.id === domainStore.navStatus }" v-for="item in pageMap"
-        :key="item.url" @click="goPage(item)">
+      <li
+        class="menu"
+        :class="{ 'menu-active': item.id === homeStore.navStatus }"
+        v-for="item in pageMap"
+        :key="item.url"
+        @click="goPage(item)"
+      >
         {{ item.name }}
       </li>
     </ul>
     <ul class="enters">
       <li class="enter">
-        <el-image style="width: 22px; height: 22px" :src="domainStore.loginImg" fit="contain" />
+        <el-image style="width: 22px; height: 22px" :src="homeStore.loginImg" fit="contain" />
         <div>优惠</div>
       </li>
       <li class="enter">
-        <el-image style="width: 22px; height: 22px" :src="domainStore.loginImg" fit="contain" />
+        <el-image style="width: 22px; height: 22px" :src="homeStore.loginImg" fit="contain" />
         <div>客服</div>
       </li>
       <li class="enter">
-        <el-image style="width: 22px; height: 22px" :src="domainStore.loginImg" fit="contain" />
+        <el-image style="width: 22px; height: 22px" :src="homeStore.loginImg" fit="contain" />
         <div>APP</div>
       </li>
     </ul>
@@ -29,8 +39,8 @@
 import { ref } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 
-import { useHomeDomainStore } from '@/stores/home.js'
-const domainStore = useHomeDomainStore()
+import { useHomeStore } from '@/stores/home.js'
+const homeStore = useHomeStore()
 const router = useRouter()
 
 const pageMap = [
@@ -73,7 +83,7 @@ const pageMap = [
 
 function goPage(item) {
   router.push(item.url)
-  domainStore.setNavStatus(item.id)
+  homeStore.setAttribute('navStatus', item.id)
 }
 </script>
 

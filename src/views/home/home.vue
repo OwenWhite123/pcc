@@ -15,8 +15,8 @@
             <el-button class="btn">彩票大厅</el-button>
           </div>
           <ul class="enters">
-            <li class="enter" v-for="(item, index) in hotList" :key="index">
-              <img class="img" :src="item.img" alt="">
+            <li class="enter" v-for="(item, index) in homeStore.hotList" :key="index">
+              <img class="img" :src="item.img" alt="" />
               <span class="name">{{ item.lotteryName }}</span>
             </li>
           </ul>
@@ -24,7 +24,7 @@
       </div>
       <div class="res">
         <div class="title">
-          <img src="" alt="">
+          <img src="" alt="" />
           <span>最新开奖结果</span>
         </div>
         <div class="content">
@@ -32,16 +32,12 @@
           <div class="rank"></div>
         </div>
       </div>
-      <div class="server">
-
-      </div>
+      <div class="server"></div>
     </div>
 
     <div class="login-box">
-      <template v-if="domainStore.hasLogin">
-        <div>
-
-        </div>
+      <template v-if="homeStore.hasLogin">
+        <div></div>
       </template>
       <template v-else>
         <Login></Login>
@@ -52,26 +48,16 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
-import { getAllLottery } from '@/api/index'
 import Login from '@/components/Login.vue'
-import { useHomeDomainStore } from '@/stores/home.js'
-const domainStore = useHomeDomainStore()
+import { useHomeStore } from '@/stores/home.js'
+const homeStore = useHomeStore()
 
 const router = useRouter()
 const route = useRoute()
 
-const hotList = ref([])
-
 onMounted(async () => {
-  await getAllLotteryFn()
+  await homeStore.getAllLotteryFn()
 })
-async function getAllLotteryFn() {
-  const { result } = await getAllLottery()
-  if (result) {
-    const list = result.list
-    hotList.value = list.filter(item => item.hot === 1).splice(0, 16)
-  }
-}
 </script>
 <style lang="scss" scoped>
 .page {
@@ -129,7 +115,9 @@ async function getAllLotteryFn() {
             height: 34px;
             padding: 7px 37px;
             border-radius: 17px;
-            box-shadow: 0 2px 0 0 #dae0e7, inset -1px -1px 0 0 #fff;
+            box-shadow:
+              0 2px 0 0 #dae0e7,
+              inset -1px -1px 0 0 #fff;
             background-color: #f9fcff;
             color: #3f5075;
           }
@@ -177,7 +165,9 @@ async function getAllLotteryFn() {
 
       .content {
         border-radius: 20px;
-        box-shadow: 0 4px 0 0 #cdd9e8, 2px 2px 14px 0 #e5ebf4;
+        box-shadow:
+          0 4px 0 0 #cdd9e8,
+          2px 2px 14px 0 #e5ebf4;
         background-color: #fff;
         display: flex;
 

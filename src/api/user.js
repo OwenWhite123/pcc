@@ -35,19 +35,28 @@ export function userLogout(data) {
 }
 
 //用户信息
-export function userInfo(data) {
+export function userInfo(params) {
   return request({
     url: '/user/info',
     method: 'get',
-    data
+    params
   })
 }
 
 //获取额度转换所有平台列表
-export function getPlatList(data) {
+export function getPlatList(params) {
   return request({
     url: '/plat/getPlatList',
     method: 'get',
-    data
+    params
+  })
+}
+
+//查询用户余额
+export function getUserBalance(params) {
+  return request({
+    url: '/user/getUserBalance',
+    method: 'get',
+    params
   })
 }

@@ -10,8 +10,8 @@
             fit="contain"
           />
         </dt>
-        <dd class="enter" v-for="temp in item.enters" :key="temp.id">
-          <span>{{ temp.name }}</span>
+        <dd class="enter" v-for="temp in item.enters" :key="temp.lotteryCode">
+          <span>{{ temp.lotteryName }}</span>
         </dd>
       </dl>
     </div>
@@ -22,15 +22,52 @@
 import { ref } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 
-import { homeSubMenus } from './constant'
-import { useHomeDomainStore } from '@/stores/home.js'
-const domainStore = useHomeDomainStore()
+import { useHomeStore } from '@/stores/home.js'
+const homeStore = useHomeStore()
 const router = useRouter()
-const enterMap = ref(homeSubMenus)
+
+import logo from '@/assets/logo.svg'
+const enterMap = ref([
+  {
+    id: '0',
+    name: '六合彩',
+    img: logo,
+    url: '/lottery/lhc',
+    enters: [...homeStore.allLhcList.lhcList]
+  },
+  {
+    id: '1',
+    name: '赛车飞艇',
+    url: '/lottery/sc',
+    img: logo,
+    enters: [...homeStore.allLhcList.scList]
+  },
+  {
+    id: '2',
+    name: '时时彩',
+    url: '/lottery/ssc',
+    img: logo,
+    enters: [...homeStore.allLhcList.sscList]
+  },
+  {
+    id: '3',
+    name: '快三',
+    url: '/lottery/k3',
+    img: logo,
+    enters: [...homeStore.allLhcList.k3List]
+  },
+  {
+    id: '4',
+    name: '其他',
+    url: '/lottery/k3',
+    img: logo,
+    enters: [...homeStore.allLhcList.otherList]
+  }
+])
 
 function goPage(item) {
   router.push(item.url)
-  domainStore.setNavStatus(item.id)
+  homeStore.setAttribute('navStatus', item.id)
 }
 </script>
 

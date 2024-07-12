@@ -107,8 +107,8 @@ import {
   getLsUserRememberPw
 } from '@/core/storage/ls'
 import { register, getCaptcha } from '@/api/user'
-import { useHomeDomainStore } from '@/stores/home.js'
-const domainStore = useHomeDomainStore()
+import { useHomeStore } from '@/stores/home.js'
+const homeStore = useHomeStore()
 
 const loginRef = ref(false)
 const confirmLoading = ref(false)
@@ -232,7 +232,7 @@ async function registerFn() {
     }
     ElMessage.success('注册成功')
     setLsHasLogin('1')
-    domainStore.setHasLogin(true)
+    homeStore.setAttribute('hasLogin', true)
     router.push('/')
   }
   setTimeout(() => {

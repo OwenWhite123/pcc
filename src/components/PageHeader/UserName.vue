@@ -1,10 +1,10 @@
 <template>
-  <div class="name-box" v-if="domainStore.hasLogin">
+  <div class="name-box" v-if="homeStore.hasLogin">
     <el-popover ref="menuPopoverRef" placement="bottom" :width="160" trigger="hover">
       <template #reference>
         <div style="display: flex;align-items: center;">
           <div class="label">欢迎回来，</div>
-          <div class="primary val">{{ domainStore.userInfo.userName }}</div>
+          <div class="primary val">{{ homeStore.userInfo.userName }}</div>
           <span class="num">99+</span>
         </div>
       </template>
@@ -65,8 +65,8 @@ import { ElMessageBox, ElMessage, ElLoading } from "element-plus"
 import Login from './Login.vue'
 import { userLogout } from '@/api/user'
 import { clearLsAll, getLsUserName, setLsUserName } from '@/core/storage/ls'
-import { useHomeDomainStore } from '@/stores/home.js'
-const domainStore = useHomeDomainStore()
+import { useHomeStore } from '@/stores/home.js'
+const homeStore = useHomeStore()
 
 const router = useRouter()
 
@@ -100,7 +100,7 @@ async function userLogoutFn() {
     // setLsUserName(name)
     // await nextTick()
     setTimeout(() => {
-      domainStore.$reset()
+      homeStore.$reset()
       router.push('/')
     }, 1000)
   }
